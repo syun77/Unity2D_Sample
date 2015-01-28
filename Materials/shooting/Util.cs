@@ -69,6 +69,11 @@ public class Util {
 	public static void SetFontColor(Color color) {
 		GetGUIStyle().normal.textColor = color;
 	}
+  /// フォント位置設定
+  public static void SetFontAlignment(TextAnchor align)
+  {
+    GetGUIStyle().alignment = align;
+  }
   /// ラベルの描画.
 	public static void GUILabel(float x, float y, float w, float h, string text) {
 		Rect rect = GetGUIRect();
