@@ -1,57 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : Token {
+/// 敵
+public class Enemy : Token
+{
+  // 生存数
+  public static int Count = 0;
+  /// 開始
+  void Start()
+  {
+    // 生存数を増やす
+    Count++;
+    // サイズを設定
+    SetSize(SpriteWidth / 2, SpriteHeight / 2);
 
-	/// 生存数
-	static int _count = 0;
-	public static int Count {
-		get { return _count; }
-	}
-	/// 開始
-	void Start () {
-		// 生存数を増やす
-		_count++;
+    // ランダムな方向に移動する
+    // 方向をランダムに決める
+    float dir = Random.Range(0, 359);
+    // 速さは2
+    float spd = 2;
+    SetVelocity(dir, spd);
+  }
 
-		// サイズを設定
-		SetSize(0.3f, 0.3f);
-		// ランダムな方向に移動する
-		SetVelocity(Random.Range(0, 359), 2);
-	}
+  /// 更新
+  void Update()
+  {
+    // カメラの左下座標を取得
+    Vector2 min = GetWorldMin();
+    // カメラの右上座標を取得する
+    Vector2 max = GetWorldMax();
 
-	/// マウスクリックした
-	void OnMouseDown() {
-		// 生存数を減らす
-		_count--;
-		Destroy(gameObject);
+    if (X < min.x || max.x < X)
+    {
+      // 画面外に出たので、X移動量を反転する
+      VX *= -1;
+      // 画面内に移動する
+      ClampScreen();
+    }
+    if (Y < min.y || max.y < Y)
+    {
+      // 画面外に出たので、Y移動量を反転する
+      VY *= -1;
+      // 画面内に移動する
+      ClampScreen();
+    }
+  }
 
-		// パーティクルを32個生成
-		for(int i = 0; i < 32; i++) {
-			Particle.Add(X, Y);
-		}
-	}
+  /// クリックされた
+  public void OnMouseDown()
+  {
+    // 生存数を減らす
+    Count--;
+    // パーティクルを生成
+    for (int i = 0; i < 32; i++)
+    {
+      Particle.Add(X, Y);
+    }
 
-	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update () {
-
-		// 画面端で反転する
-		Vector2 min = GetWorldMin();
-		Vector2 max = GetWorldMax();
-
-		if(X < min.x || max.x < X) {
-			// 反転する
-			VX *= -1;
-			// 画面内に移動する
-			ClampScreen();
-		}
-		if(Y < min.y || max.y < Y) {
-			// 反転する
-			VY *= -1;
-			// 画面内に移動する
-			ClampScreen();
-		}
-	}
+    // 破棄する
+    DestroyObj();
+  }
 
 }
