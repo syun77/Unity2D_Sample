@@ -433,8 +433,14 @@ public class Token : MonoBehaviour
     Visible = true;
   }
 
-  /// 消滅する.
+  /// 消滅する（オーバーライド可能）
+  /// ただし base.Vanish()を呼ばないと消滅しなくなることに注意
   public virtual void Vanish ()
+  {
+    VanishCannotOverride();
+  }
+  /// 消滅する（オーバーライド禁止）
+  public void VanishCannotOverride ()
   {
     gameObject.SetActive (false);
     Exists = false;
