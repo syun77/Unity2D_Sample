@@ -45,7 +45,6 @@ public class Sound {
     // ここにロードするサウンドを一括登録する
     //_LoadBgm("bgm", "bgm01");
     //_LoadSe("damage", "damage");
-    //_LoadSe("destroy", "destroy");
   }
 
   /// AudioSourceを取得する

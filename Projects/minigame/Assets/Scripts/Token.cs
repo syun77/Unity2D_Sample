@@ -29,7 +29,7 @@ public class Token : MonoBehaviour
   }
 
   /// 生存フラグ.
-  bool _exists = false;
+  bool _exists = true;
 
   public bool Exists {
     get { return _exists; }
