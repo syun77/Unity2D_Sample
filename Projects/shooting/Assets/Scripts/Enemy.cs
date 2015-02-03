@@ -97,10 +97,7 @@ public class Enemy : Token
         Particle.Add(X, Y);
       }
       // 破壊SE再生
-      if (v != 9999)
-      {
-        Sound.PlaySe("destroy");
-      }
+      Sound.PlaySe("destroy", 0);
       
       // ボスを倒したらザコ敵と敵弾を消す
       if (_id == 0)

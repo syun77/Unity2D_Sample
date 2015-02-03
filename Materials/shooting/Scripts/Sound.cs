@@ -5,21 +5,32 @@ using System.Collections.Generic;
 /// サウンド管理
 public class Sound {
 
+  /// SEチャンネル数
+  const int SE_CHANNEL = 4;
+
   /// サウンド種別
   enum eType {
     Bgm, // BGM
     Se,  // SE
   }
 
+  // シングルトン
   static Sound _singleton = null;
-  public static Sound GetInstance() {
+  // インスタンス取得
+  public static Sound GetInstance()
+  {
     return _singleton ?? (_singleton = new Sound());
   }
 
+  // サウンド再生のためのゲームオブジェクト
   GameObject _object = null;
-  AudioSource _sourceBgm = null;
-  AudioSource _sourceSe = null;
+  // サウンドリソース
+  AudioSource _sourceBgm = null; // BGM
+  AudioSource _sourceSeDefault = null; // SE (デフォルト)
+  AudioSource[] _sourceSeArray; // SE (チャンネル)
+  // BGMにアクセスするためのテーブル
   Dictionary<string, _Data> _poolBgm = new Dictionary<string, _Data>();
+  // SEにアクセスするためのテーブル 
   Dictionary<string, _Data> _poolSe = new Dictionary<string, _Data>();
 
   /// 保持するデータ
@@ -42,13 +53,12 @@ public class Sound {
 
   /// コンストラクタ
   public Sound() {
-    // ここにロードするサウンドを一括登録する
-    //_LoadBgm("bgm", "bgm01");
-    //_LoadSe("damage", "damage");
+    // チャンネル確保
+    _sourceSeArray = new AudioSource[SE_CHANNEL];
   }
 
   /// AudioSourceを取得する
-  AudioSource _GetAudioSource(eType type) {
+  AudioSource _GetAudioSource(eType type, int channel=-1) {
     if(_object == null) {
       // GameObjectがなければ作る
       _object = new GameObject("Sound");
@@ -56,7 +66,11 @@ public class Sound {
       GameObject.DontDestroyOnLoad(_object);
       // AudioSourceを作成
       _sourceBgm = _object.AddComponent<AudioSource>();
-      _sourceSe = _object.AddComponent<AudioSource>();
+      _sourceSeDefault = _object.AddComponent<AudioSource>();
+      for (int i = 0; i < SE_CHANNEL; i++)
+      {
+        _sourceSeArray[i] = _object.AddComponent<AudioSource>();
+      }
     }
 
     if(type == eType.Bgm) {
@@ -65,7 +79,16 @@ public class Sound {
     }
     else {
       // SE
-      return _sourceSe;
+      if (0 <= channel && channel < SE_CHANNEL)
+      {
+        // チャンネル指定
+        return _sourceSeArray[channel];
+      }
+      else
+      {
+        // デフォルト
+        return _sourceSeDefault;
+      }
     }
   }
 
@@ -131,10 +154,10 @@ public class Sound {
 
   /// SEの再生
   /// ※事前にLoadSeでロードしておくこと
-  public static bool PlaySe(string key) {
-    return GetInstance()._PlaySe(key);
+  public static bool PlaySe(string key, int channel=-1) {
+    return GetInstance()._PlaySe(key, channel);
   }
-  bool _PlaySe(string key) {
+  bool _PlaySe(string key, int channel=-1) {
     if(_poolSe.ContainsKey(key) == false) {
       // 対応するキーがない
       return false;
@@ -143,11 +166,19 @@ public class Sound {
     // リソースの取得
     var _data = _poolSe[key];
 
-    var source = _GetAudioSource(eType.Se);
-    // ワンショット再生
-    source.PlayOneShot(_data.Clip);
-    //source.clip = _data.Clip;
-    //source.Play();
+    if (0 <= channel && channel < SE_CHANNEL)
+    {
+      // チャンネル指定
+      var source = _GetAudioSource(eType.Se, channel);
+      source.clip = _data.Clip;
+      source.Play();
+    }
+    else
+    {
+      // デフォルトで再生
+      var source = _GetAudioSource(eType.Se);
+      source.PlayOneShot(_data.Clip);
+    }
 
     return true;
   }
