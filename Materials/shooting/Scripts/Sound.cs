@@ -78,9 +78,19 @@ public class Sound {
     GetInstance()._LoadSe(key, resName);
   }
   void _LoadBgm(string key, string resName) {
+    if (_poolBgm.ContainsKey(key))
+    {
+      // すでに登録済みなのでいったん消す
+      _poolBgm.Remove(key);
+    }
     _poolBgm.Add(key, new _Data(key, resName));
   }
   void _LoadSe(string key, string resName) {
+    if (_poolSe.ContainsKey(key))
+    {
+      // すでに登録済みなのでいったん消す
+      _poolSe.Remove(key);
+    }
     _poolSe.Add(key, new _Data(key, resName));
   }
 

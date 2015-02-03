@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1027c63d186344fecbfa1b3b2646862c
+guid: c074cc03e55b7b942a2f2677c0c0b4e7
 TextureImporter:
   fileIDToRecycleName:
     21300000: back
@@ -12,8 +12,8 @@ TextureImporter:
     21300014: pudding
     21300016: 5box
     21300018: tako
-    21300020: carrot
-    21300022: radish
+    21300020: radish
+    21300022: carrot
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -155,21 +155,21 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: carrot
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 640
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: radish
       rect:
         serializedVersion: 2
         x: 0
         y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: carrot
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 640
         width: 128
         height: 128
       alignment: 0

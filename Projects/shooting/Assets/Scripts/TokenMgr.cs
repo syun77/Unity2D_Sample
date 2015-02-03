@@ -16,6 +16,9 @@ public class TokenMgr<Type> where Type : Token {
 	public TokenMgr(string prefabName, int size=0) {
 		_size = size;
 		_prefab = Resources.Load("Prefabs/"+prefabName) as GameObject;
+    if(_prefab == null) {
+      Debug.LogError("Not found prefab. name="+prefabName);
+    }
 		_pool = new List<Type>();
 
 		if(size > 0) {
@@ -23,7 +26,7 @@ public class TokenMgr<Type> where Type : Token {
 			for(int i = 0; i < size; i++) {
 				GameObject g = GameObject.Instantiate(_prefab, new Vector3(), Quaternion.identity) as GameObject;
 				Type obj = g.GetComponent<Type>();
-				obj.Vanish();
+        obj.VanishCannotOverride();
 				_pool.Add(obj);
 			}
 		}
@@ -33,7 +36,10 @@ public class TokenMgr<Type> where Type : Token {
 		// 復活
 		obj.Revive();
 		obj.SetPosition(x, y);
-		obj.SetVelocity(direction, speed);
+    if(obj.RigidBody != null) {
+      // Rigidbody2Dがあるときのみ速度を設定する
+      obj.SetVelocity(direction, speed);
+    }
 		obj.Angle = 0;
 		// Order in Layerをインクリメントして設定する
 		obj.SortingOrder = _order;
