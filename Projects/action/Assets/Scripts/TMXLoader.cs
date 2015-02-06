@@ -105,26 +105,32 @@ public class TMXLoader
         break;
       case "data":
         // グリッドデータ
-        XmlNode n = node.FirstChild; // テキストノードを取得.
-        string val = n.Value; // テキストを取得.
-        // CSV(マップデータ)を解析.
-        int y = 0;
-        foreach (string line in val.Split('\n')) {
-          if (line == "") {
-            continue;
-          } // 空文字は除外.
-          int x = 0;
-          foreach (string s in line.Split(',')) {
-            int v = 0;
-            // ","で終わるのでチェックが必要.
-            if (int.TryParse (s, out v) == false) {
+        {
+          XmlNode n = node.FirstChild; // テキストノードを取得.
+          string val = n.Value; // テキストを取得.
+          // CSV(マップデータ)を解析.
+          int y = 0;
+          foreach (string line in val.Split('\n'))
+          {
+            if (line == "")
+            {
               continue;
+            } // 空文字は除外.
+            int x = 0;
+            foreach (string s in line.Split(','))
+            {
+              int v = 0;
+              // ","で終わるのでチェックが必要.
+              if (int.TryParse(s, out v) == false)
+              {
+                continue;
+              }
+              // 値を設定.
+              layer.Set(x, y, v);
+              x++;
             }
-            // 値を設定.
-            layer.Set (x, y, v);
-            x++;
+            y++;
           }
-          y++;
         }
         break;
       }
