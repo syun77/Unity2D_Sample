@@ -29,7 +29,7 @@ public class Token : MonoBehaviour
   }
 
   /// 生存フラグ.
-  bool _exists = false;
+  bool _exists = true;
 
   public bool Exists {
     get { return _exists; }
@@ -433,8 +433,14 @@ public class Token : MonoBehaviour
     Visible = true;
   }
 
-  /// 消滅する.
+  /// 消滅する（オーバーライド可能）
+  /// ただし base.Vanish()を呼ばないと消滅しなくなることに注意
   public virtual void Vanish ()
+  {
+    VanishCannotOverride();
+  }
+  /// 消滅する（オーバーライド禁止）
+  public void VanishCannotOverride ()
   {
     gameObject.SetActive (false);
     Exists = false;

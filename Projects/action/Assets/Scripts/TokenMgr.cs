@@ -26,7 +26,7 @@ public class TokenMgr<Type> where Type : Token {
 			for(int i = 0; i < size; i++) {
 				GameObject g = GameObject.Instantiate(_prefab, new Vector3(), Quaternion.identity) as GameObject;
 				Type obj = g.GetComponent<Type>();
-				obj.Vanish();
+        obj.VanishCannotOverride();
 				_pool.Add(obj);
 			}
 		}

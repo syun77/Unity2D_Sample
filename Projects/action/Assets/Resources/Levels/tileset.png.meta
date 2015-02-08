@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f14bb8fdcb9684994bc8d2e3d23ccf27
+guid: b43a818ecc60fbe4c8509451c8f2bf3e
 TextureImporter:
   fileIDToRecycleName:
     21300000: tileset_0
@@ -7,7 +7,6 @@ TextureImporter:
     21300004: tileset_2
     21300006: tileset_3
     21300008: tileset_4
-    21300010: tileset_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -93,16 +92,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileset_5
-      rect:
-        serializedVersion: 2
-        x: 160
         y: 0
         width: 32
         height: 32
