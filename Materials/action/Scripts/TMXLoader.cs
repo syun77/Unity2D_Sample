@@ -41,7 +41,6 @@ public class TMXLoader
         string val = n.Value; // テキストを取得.
         // CSV(マップデータ)を解析.
         int y = 0;
-        int i = 0;
         foreach (string line in val.Split('\n'))
         {
           // 空白文字を削除
