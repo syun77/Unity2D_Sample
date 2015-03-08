@@ -38,10 +38,14 @@ public class FloorMove : Token
     string name = LayerMask.LayerToName(other.gameObject.layer);
     if (name == "Ground")
     {
-      // 他の壁・床と当たったら反転
-      VX *= -1;
-      // 反対方向に押し出す
-      X += VX * Time.deltaTime;
+      if(X != _xprevious)
+      {
+        // 他の壁・床と当たったら反転
+        VX *= -1;
+        // 反対方向に押し出す
+        //X += VX * Time.deltaTime;
+        X = _xprevious;
+      }
     }
     else if (name == "Player")
     {

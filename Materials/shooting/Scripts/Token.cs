@@ -208,7 +208,7 @@ public class Token : MonoBehaviour
   /// 方向.
   public float Direction {
     get {
-      Vector2 v = rigidbody2D.velocity;
+      Vector2 v = RigidBody.velocity;
       return Mathf.Atan2 (v.y, v.x) * Mathf.Rad2Deg;
     }
   }
@@ -216,7 +216,7 @@ public class Token : MonoBehaviour
   /// 速度.
   public float Speed {
     get {
-      Vector2 v = rigidbody2D.velocity;
+      Vector2 v = RigidBody.velocity;
       return Mathf.Sqrt (v.x * v.x + v.y * v.y);
     }
   }
