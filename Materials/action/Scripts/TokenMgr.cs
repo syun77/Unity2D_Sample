@@ -26,7 +26,10 @@ public class TokenMgr<Type> where Type : Token {
 			for(int i = 0; i < size; i++) {
 				GameObject g = GameObject.Instantiate(_prefab, new Vector3(), Quaternion.identity) as GameObject;
 				Type obj = g.GetComponent<Type>();
-        obj.VanishCannotOverride();
+				if(obj == null) {
+					Debug.LogError(prefabName + "にスクリプトが未設定です");
+				}
+				obj.VanishCannotOverride();
 				_pool.Add(obj);
 			}
 		}
@@ -36,10 +39,10 @@ public class TokenMgr<Type> where Type : Token {
 		// 復活
 		obj.Revive();
 		obj.SetPosition(x, y);
-    if(obj.RigidBody != null) {
-      // Rigidbody2Dがあるときのみ速度を設定する
-      obj.SetVelocity(direction, speed);
-    }
+		if(obj.RigidBody != null) {
+			// Rigidbody2Dがあるときのみ速度を設定する
+			obj.SetVelocity(direction, speed);
+		}
 		obj.Angle = 0;
 		// Order in Layerをインクリメントして設定する
 		obj.SortingOrder = _order;
